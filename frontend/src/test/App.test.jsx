@@ -15,6 +15,6 @@ import App from '../App'
 describe('App', () => {
   it('renders Phonebook text', () => {
     render(<App />)
-    expect(screen.getByText('Phonebook1')).toBeInTheDocument()
+    expect(screen.getByText('Phonebook')).toBeInTheDocument()
   })
 })
