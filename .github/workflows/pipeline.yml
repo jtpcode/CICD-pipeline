@@ -1,0 +1,78 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+env:
+  # Check if we should deploy (main branch push without #skip in commit message)
+  OK_TO_DEPLOY: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install backend dependencies
+        run: npm install
+      - name: Install frontend dependencies
+        run: npm install --prefix frontend
+      - name: Check style
+        run: npm run lint
+      - name: Build
+        run: npm run build:ui
+      # - name: Test
+      #   run: npm test
+      # - name: Deploy
+      #   if: ${{ env.OK_TO_DEPLOY == 'true' }}
+      #   env:
+      #     deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      #   run: |
+      #     curl "$deploy_url"
+      # - name: Notify Discord on build failure
+      #   if: failure()
+      #   uses: sarisia/actions-status-discord@v1
+      #   with:
+      #     webhook: ${{ secrets.DISCORD_WEBHOOK }}
+      #     nodetail: true
+      #     title: "Build failed!"
+      #     description: |
+      #       **Commit:** ${{ github.sha }}
+      #       **Author:** ${{ github.actor }}
+      #     color: 0xff0000
+
+  # tag_release:
+  #   # env.OK_TO_DEPLOY or github.env.OK_TO_DEPLOY do not work, so we use the full condition here
+  #   if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+  #   needs: [simple_deployment_pipeline]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Bump version and push tag
+  #       uses: anothrNick/github-tag-action@1.75.0
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         DEFAULT_BUMP: patch
+  #         WITH_V: true
+
+  # notify_success:
+  #   if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+  #   needs: [simple_deployment_pipeline, tag_release]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Notify Discord on successful deployment
+  #       uses: sarisia/actions-status-discord@v1
+  #       with:
+  #         webhook: ${{ secrets.DISCORD_WEBHOOK }}
+  #         nodetail: true
+  #         title: "New version deployed!"
+  #         description: |
+  #           at https://full-stack-open-pokedex-v8dx.onrender.com by ${{ github.actor }}
+          color: 0x00ff00
