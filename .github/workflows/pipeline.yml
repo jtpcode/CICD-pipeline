@@ -28,25 +28,25 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build:ui
-      # - name: Test
-      #   run: npm test
-      # - name: Deploy
-      #   if: ${{ env.OK_TO_DEPLOY == 'true' }}
-      #   env:
-      #     deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-      #   run: |
-      #     curl "$deploy_url"
-      # - name: Notify Discord on build failure
-      #   if: failure()
-      #   uses: sarisia/actions-status-discord@v1
-      #   with:
-      #     webhook: ${{ secrets.DISCORD_WEBHOOK }}
-      #     nodetail: true
-      #     title: "Build failed!"
-      #     description: |
-      #       **Commit:** ${{ github.sha }}
-      #       **Author:** ${{ github.actor }}
-      #     color: 0xff0000
+  #     - name: Test
+  #       run: npm test
+  #     - name: Deploy
+  #       if: ${{ env.OK_TO_DEPLOY == 'true' }}
+  #       env:
+  #         deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+  #       run: |
+  #         curl "$deploy_url"
+  #     - name: Notify Discord on build failure
+  #       if: failure()
+  #       uses: sarisia/actions-status-discord@v1
+  #       with:
+  #         webhook: ${{ secrets.DISCORD_WEBHOOK }}
+  #         nodetail: true
+  #         title: "Build failed!"
+  #         description: |
+  #           **Commit:** ${{ github.sha }}
+  #           **Author:** ${{ github.actor }}
+  #         color: 0xff0000
 
   # tag_release:
   #   # env.OK_TO_DEPLOY or github.env.OK_TO_DEPLOY do not work, so we use the full condition here
@@ -75,4 +75,4 @@ jobs:
   #         title: "New version deployed!"
   #         description: |
   #           at https://full-stack-open-pokedex-v8dx.onrender.com by ${{ github.actor }}
-          color: 0x00ff00
+  #         color: 0x00ff00
