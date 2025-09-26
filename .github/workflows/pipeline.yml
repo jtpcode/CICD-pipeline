@@ -28,8 +28,8 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build:ui
-  #     - name: Test
-  #       run: npm test
+      - name: Test
+        run: npm test --prefix frontend
   #     - name: Deploy
   #       if: ${{ env.OK_TO_DEPLOY == 'true' }}
   #       env:
