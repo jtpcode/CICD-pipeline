@@ -28,6 +28,14 @@ export default [
       'no-console': 'off',
     },
   },
+  {
+    files: ['frontend/**/*.js'],
+    languageOptions: {
+      sourceType: 'module',
+      globals: { ...globals.browser },
+      ecmaVersion: 'latest',
+    },
+  },
   { 
     ignores: ['dist/**'], 
   },

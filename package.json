@@ -7,20 +7,12 @@
     "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf dist && cd ../Fullstack/part2/phonebook/ && npm run build && cp -r dist ../../../Fullstack_part3/",
+    "build:ui": "rm -rf dist && cd frontend && npm run build",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "lint": "eslint ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jtpcode/Fullstack_part3.git"
-  },
   "author": "jtpcode",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jtpcode/Fullstack_part3/issues"
-  },
-  "homepage": "https://github.com/jtpcode/Fullstack_part3#readme",
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
