@@ -9,12 +9,21 @@ vi.mock('axios', () => ({
   },
 }))
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import App from '../App'
 
 describe('App', () => {
-  it('renders Phonebook text', () => {
-    render(<App />)
+  it('renders Phonebook text', async () => {
+    await act(async () => {
+      render(<App />)
+    })
     expect(screen.getByText('Phonebook')).toBeInTheDocument()
+  })
+
+  it('renders Add button', async () => {
+    await act(async () => {
+      render(<App />)
+    })
+    expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument()
   })
 })
